@@ -1,0 +1,49 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(255, 249, 240);
+  min-width: 320px;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  white-space: nowrap;
+  padding: 0.5rem;
+}
+
+th {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+tbody tr:nth-child(2n) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+  text-align: center;
+}
+
+tbody tr {
+  transition: background-color ease 0.3s;
+  cursor: pointer;
+}
+
+tbody tr:not(.row--active ):hover {
+  background-color: rgb(232, 247, 206) !important;
+}

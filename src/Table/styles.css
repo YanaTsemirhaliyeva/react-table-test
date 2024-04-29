@@ -1,0 +1,4 @@
+tbody .row--active {
+  background-color: rgb(198, 253, 235) !important;
+  pointer-events: none;
+}
