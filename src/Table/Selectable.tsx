@@ -1,4 +1,5 @@
 import { HeaderData } from '@/types/header';
+import { TableType } from '@/utils';
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import {
   Row,
@@ -36,7 +37,7 @@ export const IndeterminateCheckbox = forwardRef(
 export default function Selectable({data}: SelectableProps) {
 
   // определения колонок
-  const columns: Column[] = useMemo(() => [
+  const columns: Column<TableType>[] = useMemo(() => [
     {
       Header: 'ЗА ПЕРИОД',
       accessor: 'rep_beg_period',
@@ -75,7 +76,7 @@ export default function Selectable({data}: SelectableProps) {
         ),
         // компонент ячейки
         // принимает экземпляр таблицы и модель ячейки
-        Cell: ({ row }: { row: Row<{}> }) => (
+        Cell: ({ row }: { row: Row<TableType> }) => (
           <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
         )
       },

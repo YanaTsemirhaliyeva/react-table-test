@@ -1,8 +1,9 @@
+import { TableType } from '@/utils'
 import React from 'react'
 import { TableInstance } from 'react-table'
 
 type Props = Pick<
-  TableInstance<{}>,
+  TableInstance<TableType>,
   | 'gotoPage'
   | 'previousPage'
   | 'nextPage'

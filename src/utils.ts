@@ -1,17 +1,24 @@
-class NumberFormatter {
-  static leftPad(number, size = 2) {
-    return String(number).padStart(size, '0');
+import { DefaultColumnFilter } from "./Table/Filterable/filters"
+
+const createType = () => {
+  return {
+    'f_pers_young_spec_id': 0,
+    'insert_date': 'string',
+    'insert_user': 'string',
+    'org_employee': 'string',
+    'rep_beg_period': 'string',
+    'rep_end_period': 'string',
+    'update_date': 'string',
+    'update_user': 'string',
   }
 }
+export type TableType = ReturnType<typeof createType>
 
-  // Расширение встроенного объекта Date новыми методами
-export class EnhancedDate extends Date {
-  getISOTimezoneOffset() {
-    const offset = super.getTimezoneOffset();
-    return (offset < 0 ? "+" : "-") + NumberFormatter.leftPad(Math.floor(Math.abs(offset / 60))) + ":" + NumberFormatter.leftPad(Math.abs(offset % 60));
-  }
 
-  toISOLocaleString() {
-    return `${super.getFullYear()}-${NumberFormatter.leftPad(super.getMonth() + 1)}-${NumberFormatter.leftPad(super.getDate())}T${NumberFormatter.leftPad(super.getHours())}:${NumberFormatter.leftPad(super.getMinutes())}:${NumberFormatter.leftPad(super.getSeconds())}.${NumberFormatter.leftPad(super.getMilliseconds(), 3)}`;
-  }
+// настройки колонки по умолчанию
+export const defaultColumn = {
+  Filter: DefaultColumnFilter,
+  // https://github.com/TanStack/table/issues/2293
+  filter: 'text'
 }
+

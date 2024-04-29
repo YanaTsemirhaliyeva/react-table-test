@@ -86,8 +86,6 @@ export function AddNewForm() {
       }));
     }
   };
-  console.log(endVvalue?.toLocaleString().split(',')[0].split('.').reverse().join('-'));
-
 
   return (
     <form className={className} onSubmit={handleFormSubmit} ref={modalRef}>

@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import { ColumnFilterT, GlobalFilterT } from '@/types'
+import { TableType } from '@/utils'
 import { matchSorter } from 'match-sorter'
 import { useMemo, useState } from 'react'
 import { FilterType, FilterTypes, useAsyncDebounce } from 'react-table'
 
 // UI глобального фильтра
 
-export const GlobalFilter: GlobalFilterT<{}> = ({
+export const GlobalFilter: GlobalFilterT<TableType> = ({
   preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter
@@ -38,7 +40,7 @@ export const GlobalFilter: GlobalFilterT<{}> = ({
 }
 
 // UI дефолтного фильтра
-export const DefaultColumnFilter: ColumnFilterT<{}> = ({
+export const DefaultColumnFilter: ColumnFilterT<TableType> = ({
   column: { filterValue, preFilteredRows, setFilter }
 }) => {
   const count = preFilteredRows.length
@@ -57,7 +59,7 @@ export const DefaultColumnFilter: ColumnFilterT<{}> = ({
 }
 
 // UI фильтра-слайдера
-export const SliderColumnFilter: ColumnFilterT<{}> = ({
+export const SliderColumnFilter: ColumnFilterT<TableType> = ({
   column: { filterValue, setFilter, preFilteredRows, id }
 }) => {
   // вычисляем минимальное и максимальное значения
@@ -89,7 +91,7 @@ export const SliderColumnFilter: ColumnFilterT<{}> = ({
 }
 
 // UI фильтра-диапазона
-export const NumberRangeColumnFilter: ColumnFilterT<{}> = ({
+export const NumberRangeColumnFilter: ColumnFilterT<TableType> = ({
   column: { filterValue = [], preFilteredRows, setFilter, id }
 }) => {
   const [min, max] = useMemo(() => {
@@ -134,7 +136,7 @@ export const NumberRangeColumnFilter: ColumnFilterT<{}> = ({
 }
 
 // UI фильтра-селектора
-export const SelectColumnFilter: ColumnFilterT<{}> = ({
+export const SelectColumnFilter: ColumnFilterT<TableType> = ({
   column: { filterValue, setFilter, preFilteredRows, id }
 }) => {
   // формируем варианты
@@ -164,7 +166,7 @@ export const SelectColumnFilter: ColumnFilterT<{}> = ({
 }
 
 // кастомный тип фильтрации
-export const fuzzyText: FilterType<{}> = (rows, ids, filterValue) => {
+export const fuzzyText: FilterType<TableType> = (rows, ids, filterValue) => {
   return matchSorter(rows, filterValue, {
     keys: [(row) => ids.map((id) => row.values[id]).flat()]
   })
@@ -174,7 +176,7 @@ export const fuzzyText: FilterType<{}> = (rows, ids, filterValue) => {
 fuzzyText.autoRemove = (val: unknown) => !val
 
 // кастомная функция фильтрации
-export const filterGreaterThanOrEqual: FilterType<{}> = (
+export const filterGreaterThanOrEqual: FilterType<TableType> = (
   rows,
   ids,
   filterValue
@@ -191,7 +193,7 @@ export const filterGreaterThanOrEqual: FilterType<{}> = (
 filterGreaterThanOrEqual.autoRemove = (val: unknown) => typeof val !== 'number'
 
 // типы фильтрации
-export const filterTypes: FilterTypes<{}> = {
+export const filterTypes: FilterTypes<TableType> = {
   // добавляем новый тип
   fuzzyText,
   // перезаписываем встроенный тип `text`

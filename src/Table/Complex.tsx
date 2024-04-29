@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BiSortAlt2, BiSortDown, BiSortUp } from 'react-icons/bi'
 import {
   Row,
@@ -8,14 +9,18 @@ import {
   useSortBy,
   useTable,
   Column,
-  SortByFn
+  SortByFn,
+  // CellProps,
+  // HeaderGroup,
+  // Meta,
+  // Cell
 } from 'react-table'
 
 import {
   filterTypes,
   GlobalFilter,
 } from './Filterable/filters'
-import { defaultColumn } from './Filterable'
+import { defaultColumn } from '@/utils'
 import Pagination from './Paginated/Pagination'
 import { IndeterminateCheckbox } from './Selectable'
 import { useMemo } from 'react'
@@ -26,13 +31,14 @@ import { setActiveHeader, setRowActive } from '@/store/headers/headers.slice'
 import { getRowActive } from '@/store/headers/headers.selectors'
 import './styles.css'
 import { setActiveIdForm } from '@/store/data-line/data-line.slice'
+import { TableType } from '@/utils'
 
 
 // типы сортировок
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const sortTypes: Record<string, SortByFn<any>> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  string: (rowA, rowB, columnId, desc) => {
+  string: (rowA, rowB, columnId) => {
     const [a, b] = [rowA.values[columnId], rowB.values[columnId]] as [
       string,
       string
@@ -50,7 +56,7 @@ export default function Complex({data}: ComplexProps) {
   const dispatch = useAppDispatch();
   const activeRowId = useAppSelector(getRowActive);
 
-  const columns: Column[] = useMemo(() => [
+  const columns: Column<TableType>[] = useMemo(() => [
     {
       Header: 'ЗА ПЕРИОД',
       accessor: ({rep_beg_period, rep_end_period}) =>
@@ -124,7 +130,7 @@ export default function Complex({data}: ComplexProps) {
           Header: ({ getToggleAllRowsSelectedProps }) => (
             <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
           ),
-          Cell: ({ row }: { row: Row<{}> }) => (
+          Cell: ({ row }: {row: Row<TableType>} ) => (
             <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
           )
         },
@@ -138,7 +144,6 @@ export default function Complex({data}: ComplexProps) {
     dispatch(setActiveIdForm(row.f_pers_young_spec_id));
     dispatch(setActiveHeader(row));
   }
-  console.log(activeRowId)
 
   return (
     <Layout>
@@ -250,3 +255,4 @@ export default function Complex({data}: ComplexProps) {
     </Layout>
   )
 }
+

@@ -33,10 +33,8 @@ export default function Paginated({data}: PaginatedProps) {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    // новые штуки
     state: { pageIndex, pageSize },
     page,
-    // возможно, здесь стоило использовать `...otherProps` :)
     canPreviousPage,
     canNextPage,
     pageCount,
@@ -71,7 +69,7 @@ export default function Paginated({data}: PaginatedProps) {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
+            {page.map((row) => {
               prepareRow(row)
               return (
                 <tr {...row.getRowProps()}>

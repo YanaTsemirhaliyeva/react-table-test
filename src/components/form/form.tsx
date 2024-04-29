@@ -129,10 +129,22 @@ export default function Form() {
   const distributionSum = useCallback(() => updates.reduce((acc, sum) => acc + Number(sum.distributionCount), 0), [updates]);
   const targetSum = useCallback(() => updates.reduce((acc, sum) => acc + Number(sum.targetCount), 0), [updates]);
   const selectedForms = allforms.filter((item) => item.f_pers_young_spec_id === activeHeaderFormId).reverse();
-  const lastUpdates: DataLineData[] = selectedForms.reduce((acc, form) => acc.map[form.nsi_pers_indicate_id] ? acc : ((acc.map[form.nsi_pers_indicate_id] = true), acc.lastUpdates.push(form), acc), {
-    map: {},
-    lastUpdates: []
-  }).lastUpdates;
+  // const lastUpdates: DataLineData[] = selectedForms.reduce((acc, form) => acc.map[form.nsi_pers_indicate_id] ? acc : ((acc.map[form.nsi_pers_indicate_id] = true), acc.lastUpdates.push(form), acc), {
+  //   map: {},
+  //   lastUpdates: []
+  // }).lastUpdates;
+
+  type DataMap = {
+    [key: number]: DataLineData;
+  }
+
+  const lastUpdates: DataLineData[] = Object.values(selectedForms.reduce(
+    (acc: DataMap, val: DataLineData) => {
+      acc[val.nsi_pers_indicate_id] = Object.assign(acc[val.nsi_pers_indicate_id] ?? {}, val);
+      return acc;
+    },
+    {} as DataMap
+  ))
 
   const sortedUpdates = useMemo(() => lastUpdates.sort((a, b) => a.nsi_pers_indicate_id - b.nsi_pers_indicate_id), [lastUpdates]);
 
@@ -142,7 +154,6 @@ export default function Form() {
       dispatch(setActiveIdForm(null));
     }
     if (updatePostStatus === Status.Success || prevActiveId !== activeHeaderFormId || isNewFormAdd) {
-      console.log('useEffect')
       dispatch(setUpdatesStatus(Status.Idle));
 
       if (sortedUpdates && sortedUpdates.length > 0) {
@@ -177,9 +188,7 @@ export default function Form() {
   useEffect(() =>{
     if (sortedUpdates && sortedUpdates.length > 0) {
       for (let j = 0; j < sortedUpdates.length; j++) {
-        console.log(1)
         for (let i = 0; i < initialStateArray.length; i++) {
-          console.log(2)
           if (initialStateArray[i].nsiPersIndicateId === sortedUpdates[j].nsi_pers_indicate_id) {
             sets[i]({...initialStateArray[i],
                 targetCount: sortedUpdates[j].target_count,

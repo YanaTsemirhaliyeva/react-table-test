@@ -1,6 +1,7 @@
 import { DataLineData } from '@/types/data-line'
 import { HeaderData } from '@/types/header'
 import { LineData } from '@/types/lines'
+import { TableType } from '@/utils'
 import { useMemo } from 'react'
 import { BiSortAlt2, BiSortDown, BiSortUp } from 'react-icons/bi'
 import { Column, SortByFn, useSortBy, useTable } from 'react-table'
@@ -18,9 +19,9 @@ export default function Sortable({headers}: SortableProps) {
 
 // типы сортировок
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const sortTypes: Record<string, SortByFn<any>> = {
+const sortTypes: Record<string, SortByFn<TableType>> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  string: (rowA, rowB, columnId, desc) => {
+  string: (rowA, rowB, columnId) => {
     const [a, b] = [rowA.values[columnId], rowB.values[columnId]] as [
       string,
       string
@@ -31,7 +32,7 @@ const sortTypes: Record<string, SortByFn<any>> = {
 }
 
     // определения колонок
-  const columns: Column[] = useMemo(() => [
+  const columns: Column<TableType>[] = useMemo(() => [
     {
       Header: 'ЗА ПЕРИОД',
       accessor: 'rep_beg_period',

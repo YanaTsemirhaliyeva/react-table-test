@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Column, useFilters, useGlobalFilter, useTable } from 'react-table'
 import {
-  DefaultColumnFilter,
-  filterGreaterThanOrEqual,
   filterTypes,
   GlobalFilter,
-  NumberRangeColumnFilter,
-  SelectColumnFilter,
-  SliderColumnFilter
 } from './filters'
 import { useMemo } from 'react'
 import { HeaderData } from '@/types/header'
+import { defaultColumn, TableType } from '@/utils'
 
 
 type FilterableProps = {
@@ -19,16 +15,9 @@ type FilterableProps = {
 
 
 
-// настройки колонки по умолчанию
-export const defaultColumn = {
-  Filter: DefaultColumnFilter,
-  // https://github.com/TanStack/table/issues/2293
-  filter: 'text'
-}
-
 export default function Filterable({data}: FilterableProps) {
 
-  const columns: Column[] = useMemo(() => [
+  const columns: Column<TableType>[] = useMemo(() => [
     {
       Header: 'ЗА ПЕРИОД',
       accessor: 'rep_beg_period',
@@ -93,7 +82,7 @@ export default function Filterable({data}: FilterableProps) {
             </tr>
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
+            {rows.map((row) => {
               prepareRow(row)
               return (
                 <tr {...row.getRowProps()}>
