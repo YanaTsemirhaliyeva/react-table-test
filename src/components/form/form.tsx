@@ -122,7 +122,6 @@ export default function Form() {
   });
   const handleFormChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const {name, value, id} = evt.target;
-    console.log(name, value, id)
     sets[Number(id)-1]({ ...updates[Number(id)-1], [name]: value})
   };
 
@@ -229,7 +228,6 @@ export default function Form() {
 
   const handleFormSubmit: SubmitHandler<PostUpdates> = (data) => {
     const {update_user} = data
-    console.log(update_user)
     reset();
     if(activeForm && newChanges.length > 0) {
       newChanges.map((change) => {
