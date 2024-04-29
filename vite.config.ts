@@ -11,5 +11,6 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['js-big-decimal']
-  }
+  },
+  base: '/react-table-test'
 })

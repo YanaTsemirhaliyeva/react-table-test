@@ -18,7 +18,7 @@ store.dispatch(fetchLinesAction());
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <HistoryRouter history={browserHistory}>
+      <HistoryRouter history={browserHistory} basename={import.meta.env.BASE_URL}>
         <ToastContainer />
         <App />
       </HistoryRouter>
